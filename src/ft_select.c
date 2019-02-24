@@ -62,7 +62,6 @@ int				main(int ac, char **av, char **en)
 	t_arg	*lst;
 
 	lst = make_t_arg_lst(av);
-
 	init_window();
 	while (1)
 	{
@@ -70,6 +69,9 @@ int				main(int ac, char **av, char **en)
 		read(STDIN_FILENO, &c, 8);
 		printf("%ld\n", c);
 		putchar('\n');
+		printf("%s\n", lst->name);
+		lst = lst->next;
+		lst = lst->next;
 		c = 0;
 	}
 	exit(0);

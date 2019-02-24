@@ -6,7 +6,7 @@
 /*   By: lreznak- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 04:40:33 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/24 05:30:00 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/24 05:37:56 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ t_arg		*make_t_arg_lst(char **args)
 		node->row = i;
 		i++;
 	}
+	node->next = node_cpy;
+	node->next->prev = node;
 	return (node_cpy);
 }
