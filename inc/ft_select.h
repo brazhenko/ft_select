@@ -46,6 +46,7 @@ struct s_arg
 	int 	row;
 	int		type;
 	int 	is_selected;
+	int 	is_current;
 	int 	namelen;
 	char 	*name;
 };
@@ -54,6 +55,8 @@ t_arg		*make_t_arg_lst(char **args, char *cur_dir);
 void		print_arg(t_arg *arg);
 void		move_right(t_arg *arg);
 void		move_left(t_arg *arg);
+void		ft_select_exit(void);
+
 
 
 

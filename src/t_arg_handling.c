@@ -6,7 +6,7 @@
 /*   By: lreznak- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 04:40:33 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/24 07:18:39 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/24 07:19:28 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_arg		*new_t_arg(char *name, char *cur_dir)
 	new->name = ft_strcpy(ft_strnew(new->namelen), name);
 	new->col = 1;
 	new->is_selected = 0;
+	new->is_current = 0;
 	return (new);
 }
 
@@ -36,7 +37,7 @@ t_arg		*make_t_arg_lst(char **args, char *cur_dir)
 	node = new_t_arg(args[i], cur_dir);
 	node->row = i;
 	node_cpy = node;
-	node->is_selected = 1;
+	node->is_current = 1;
 	i++;
 	while (args[i])
 	{

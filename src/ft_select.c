@@ -81,11 +81,9 @@ int				main(int ac, char **av, char **en)
 		set_keypress();
 		read(STDIN_FILENO, &key, 8);
 		if (key == KEY_ESC)
-			exit(EXIT_SUCCESS);
+			ft_select_exit();
 		if (key == KEY_DOWN)
 		{
-			ft_putstr_fd(tgoto(tgetstr("cm", NULL), 10, 10), STDIN_FILENO);
-			ft_putstr_fd("HUI", 0);
 			move_right(lst);
 			lst = lst->next;
 		}
@@ -94,6 +92,13 @@ int				main(int ac, char **av, char **en)
 			move_left(lst);
 			lst = lst->prev;
 		}
+		else if (key == KEY_SPC)
+		{
+			lst->is_selected = !lst->is_selected;
+			print_arg(lst);
+		}
+		else if (key == 1111111)
+			exit(0);
 		key = 0;
 	}
 	exit(0);
