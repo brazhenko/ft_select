@@ -24,8 +24,6 @@
 # define KEY_TAB			9
 # define KEY_SPC			32
 # define KEY_ENTER			10
-# define KEY_SELECT			115
-# define KEY_UNSELECT		117
 
 /*
 **			t_arg (aka struct s_arg):
@@ -47,14 +45,16 @@ struct s_arg
 	int		type;
 	int 	is_selected;
 	int 	is_current;
+	int 	is_begin;
 	int 	namelen;
 	char 	*name;
 };
 
 t_arg		*make_t_arg_lst(char **args, char *cur_dir);
+void		init_window(void);
+void		delete_t_arg(t_arg **arg);
 void		print_arg(t_arg *arg);
-void		move_next(t_arg **arg);
-void		move_prev(t_arg **arg);
+void		print_all_args(t_arg *arg);
 void		move_arg(t_arg **arg, char *direction);
 void		ft_select_exit(void);
 

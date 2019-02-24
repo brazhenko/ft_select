@@ -6,7 +6,7 @@
 /*   By: lreznak- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 04:40:33 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/24 07:19:28 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/24 13:22:12 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ t_arg		*new_t_arg(char *name, char *cur_dir)
 	return (new);
 }
 
+void		delete_t_arg(t_arg **arg)
+{
+	if (!(*arg))
+		return ;
+	ft_putstr_fd(tgetstr("cl",0), 0);
+	(*arg)->prev->next = (*arg)->next;
+	(*arg)->next->prev = (*arg)->prev;
+	(*arg) = (*arg)->prev == (*arg) ? NULL : (*arg)->prev;
+	(*arg)->is_current = 1;
+	print_all_args(*arg);
+}
+
 t_arg		*make_t_arg_lst(char **args, char *cur_dir)
 {
 	t_arg	*node;
@@ -37,7 +49,7 @@ t_arg		*make_t_arg_lst(char **args, char *cur_dir)
 	node = new_t_arg(args[i], cur_dir);
 	node->row = i;
 	node_cpy = node;
-	node->is_current = 1;
+	node->is_current = node->is_begin = 1;
 	i++;
 	while (args[i])
 	{

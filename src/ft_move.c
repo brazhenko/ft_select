@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/24 10:19:54 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/24 10:44:50 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	print_arg(t_arg *arg)
 {
 	char buf[1024];
 
+	if (!arg)
+		return ;
 	tgetent(buf, getenv("TERM"));
 	ft_putstr_fd(tgoto(tgetstr("cm", NULL), arg->col, arg->row), STDIN_FILENO);
 	if (arg->is_current)
@@ -27,22 +29,18 @@ void	print_arg(t_arg *arg)
 	ft_putstr_fd(tgetstr("se", NULL), 0);
 }
 
-void	move_next(t_arg **arg)
+void	print_all_args(t_arg *arg)
 {
-	(*arg)->is_current = 0;
-	print_arg(*arg);
-	*arg = (*arg)->next;
-	(*arg)->is_current = 1;
-	print_arg(*arg);
-}
-
-void	move_prev(t_arg **arg)
-{
-	(*arg)->is_current = 0;
-	print_arg(*arg);
-	*arg = (*arg)->prev;
-	(*arg)->is_current = 1;
-	print_arg(*arg);
+	if (!arg)
+		return ;
+	while (!arg->is_begin)
+		arg = arg->next;
+	do
+	{
+		print_arg(arg);
+		arg = arg->next;
+	}
+	while (!arg->is_begin);
 }
 
 void	move_arg(t_arg **arg, char *direction)

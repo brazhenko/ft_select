@@ -1,26 +1,6 @@
 #include "ft_select.h"
 
-
-
-void term_caps()
-{
-	char *clstr;
-	char *cmstr;
-	int cs;
-	char *tmp;
-	int line;
-	clstr=tgetstr("cl",0); /* очистка экрана */
-	cmstr=tgetstr("cm", 0); /* перемещение y,x */
-	line=tgetnum("li"); /* полосы терминала */
-	cs=tgetnum("co"); /* колонки терминала */
-	tmp=tgetstr("pc",0); /* символ дозаполнения */
-	PC=tmp ? *tmp : 0;
-	BC=tgetstr("uc",0); /* сдвиг курсора на символ влево */
-	UP=tgetstr("up",0); /* сдвиг курсора на линию вверх */
-
-}
-
-void		set_keypress(void)
+void	set_keypress(void)
 {
 	static struct termios stored_settings;
 
@@ -71,29 +51,26 @@ int				main(int ac, char **av, char **en)
 		print_usage();
 	lst = make_t_arg_lst(av + 1, cur_dir);
 	init_window();
-	while (--ac)
-	{
-		print_arg(lst);
-		lst = lst->next;
-	}
+	print_all_args(lst);
 	while (1)
 	{
 		set_keypress();
 		read(STDIN_FILENO, &key, 8);
 		if (key == KEY_ESC)
 			ft_select_exit();
-		if (key == KEY_DOWN)
+		else if (key == KEY_DOWN)
 			move_arg(&lst, "next");
-		if (key == KEY_UP)
+		else if (key == KEY_UP)
 			move_arg(&lst, "prev");
 		else if (key == KEY_SPC)
 		{
 			lst->is_selected = ~lst->is_selected;
 			print_arg(lst);
 		}
+		else if (key == KEY_BACKSPACE)
+			delete_t_arg(&lst);
 		else if (key == 1111111)
 			exit(0);
 		key = 0;
 	}
-	exit(0);
 }
