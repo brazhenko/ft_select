@@ -8,6 +8,7 @@
 # include <stdlib.h>
 # include <termios.h>
 # include <termcap.h>
+# include <sys/stat.h>
 
 /*
 **	Defines of needed keys.
@@ -49,7 +50,13 @@ struct s_arg
 	char 	*name;
 };
 
-t_arg		*make_t_arg_lst(char **args);
+t_arg		*make_t_arg_lst(char **args, char *cur_dir);
+void		print_arg(t_arg *arg);
+void		move_right(t_arg *arg);
+void		move_left(t_arg *arg);
+
+
+
 
 
 #endif

@@ -1,6 +1,9 @@
 NAME				= ft_select
 SRC                 = src/ft_select.c \
-					  src/t_arg_handling.c 
+					  src/t_arg_handling.c \
+					  src/process_command.c \
+					  src/ft_move.c 
+
 LIB 				= libft/libft.a
 CC                  = clang
 

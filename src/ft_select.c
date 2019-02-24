@@ -50,7 +50,7 @@ void	init_window(void)
 	char *test3 = tgetstr("nd", 0);
 
 
-	printf("%s%s\n", clstr, test1);
+	printf("%s%s%s\n", clstr, test1, test2);
 }
 
 void			print_usage(void)
@@ -63,20 +63,38 @@ extern char		**environ;
 
 int				main(int ac, char **av, char **en)
 {
-	long	c = 0;
-	char 	*cur_dir;
+	long	key = 0;
 	t_arg	*lst;
+	char 	cur_dir[2048] = ".";
 
 	if (ac < 2)
 		print_usage();
-	lst = make_t_arg_lst(av);
+	lst = make_t_arg_lst(av + 1, cur_dir);
 	init_window();
+	while (--ac)
+	{
+		print_arg(lst);
+		lst = lst->next;
+	}
 	while (1)
 	{
 		set_keypress();
-		read(STDIN_FILENO, &c, 8);
-		printf("%ld\n", c);
-		c = 0;
+		read(STDIN_FILENO, &key, 8);
+		if (key == KEY_ESC)
+			exit(EXIT_SUCCESS);
+		if (key == KEY_DOWN)
+		{
+			ft_putstr_fd(tgoto(tgetstr("cm", NULL), 10, 10), STDIN_FILENO);
+			ft_putstr_fd("HUI", 0);
+			move_right(lst);
+			lst = lst->next;
+		}
+		if (key == KEY_UP)
+		{
+			move_left(lst);
+			lst = lst->prev;
+		}
+		key = 0;
 	}
 	exit(0);
 }
