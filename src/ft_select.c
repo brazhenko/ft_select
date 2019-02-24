@@ -50,24 +50,27 @@ void	init_window(void)
 	char *test3 = tgetstr("nd", 0);
 
 
-	printf("%s%s", clstr, test1);
+	printf("%s%s\n", clstr, test1);
 }
 
 extern char		**environ;
 
 int				main(int ac, char **av, char **en)
 {
-	char	c;
+	long	c = 0;
+	char 	*cur_dir;
+	t_arg	*lst;
+
+	lst = make_t_arg_lst(av);
+
 	init_window();
 	while (1)
 	{
 		set_keypress();
-		printf(" ");
-		c = getc(stdin);
-		if (c == 10)
-		{
-			// printf("%s\n", cursor_right);
-		}
+		read(STDIN_FILENO, &c, 8);
+		printf("%ld\n", c);
+		putchar('\n');
+		c = 0;
 	}
 	exit(0);
 }
