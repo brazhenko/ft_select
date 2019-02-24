@@ -7,5 +7,6 @@
 # include <term.h>
 # include <stdlib.h>
 # include <termios.h>
+# include <termcap.h>
 
 #endif
