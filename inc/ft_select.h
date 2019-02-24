@@ -9,6 +9,7 @@
 # include <termios.h>
 # include <termcap.h>
 # include <sys/stat.h>
+# include <dirent.h>
 
 /*
 **	Defines of needed keys.
@@ -33,7 +34,8 @@
 **			is_selected - flag of the
 */
 
-typedef struct s_arg t_arg;
+typedef struct s_arg 		t_arg;
+typedef struct dirent		t_dirent;
 
 struct s_arg
 {
@@ -57,7 +59,7 @@ void		print_arg(t_arg *arg);
 void		print_all_args(t_arg *arg);
 void		move_arg(t_arg **arg, char *direction);
 void		ft_select_exit(void);
-
+t_arg 		*read_directory(char *path);
 
 
 

@@ -49,6 +49,7 @@ int				main(int ac, char **av, char **en)
 
 	if (ac < 2)
 		print_usage();
+	ft_strcat(cur_dir, "/");
 	lst = make_t_arg_lst(av + 1, cur_dir);
 	init_window();
 	print_all_args(lst);
@@ -67,8 +68,18 @@ int				main(int ac, char **av, char **en)
 			lst->is_selected = ~lst->is_selected;
 			print_arg(lst);
 		}
+		else if (key == KEY_TAB)
+		{
+			ft_strcat(cur_dir, lst->name);
+			lst = read_directory(cur_dir);
+			ft_strcat(cur_dir, "/");
+		}
 		else if (key == KEY_BACKSPACE)
-			delete_t_arg(&lst);
+		{
+			ft_strcat(cur_dir, "..");
+			lst = read_directory(cur_dir);
+			ft_strcat(cur_dir, "/");
+		}
 		else if (key == 1111111)
 			exit(0);
 		key = 0;

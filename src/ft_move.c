@@ -6,11 +6,11 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/24 10:44:50 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/24 22:12:06 by ghazrak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "../inc/ft_select.h"
 
 void	print_arg(t_arg *arg)
 {
