@@ -55,6 +55,7 @@ t_arg		*make_t_arg_lst(char **args, char *cur_dir);
 void		print_arg(t_arg *arg);
 void		move_next(t_arg **arg);
 void		move_prev(t_arg **arg);
+void		move_arg(t_arg **arg, char *direction);
 void		ft_select_exit(void);
 
 

@@ -83,13 +83,9 @@ int				main(int ac, char **av, char **en)
 		if (key == KEY_ESC)
 			ft_select_exit();
 		if (key == KEY_DOWN)
-		{
-			move_next(&lst);
-		}
+			move_arg(&lst, "next");
 		if (key == KEY_UP)
-		{
-			move_prev(&lst);
-		}
+			move_arg(&lst, "prev");
 		else if (key == KEY_SPC)
 		{
 			lst->is_selected = ~lst->is_selected;
