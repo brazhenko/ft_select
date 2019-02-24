@@ -53,6 +53,12 @@ void	init_window(void)
 	printf("%s%s\n", clstr, test1);
 }
 
+void			print_usage(void)
+{
+	write(1, "usage: ./ft_select [arg1] [arg2] [arg3] ...\n", 45);
+	exit(EXIT_SUCCESS);
+}
+
 extern char		**environ;
 
 int				main(int ac, char **av, char **en)
@@ -61,6 +67,8 @@ int				main(int ac, char **av, char **en)
 	char 	*cur_dir;
 	t_arg	*lst;
 
+	if (ac < 2)
+		print_usage();
 	lst = make_t_arg_lst(av);
 	init_window();
 	while (1)
@@ -68,10 +76,6 @@ int				main(int ac, char **av, char **en)
 		set_keypress();
 		read(STDIN_FILENO, &c, 8);
 		printf("%ld\n", c);
-		putchar('\n');
-		printf("%s\n", lst->name);
-		lst = lst->next;
-		lst = lst->next;
 		c = 0;
 	}
 	exit(0);
