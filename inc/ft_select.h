@@ -53,8 +53,8 @@ struct s_arg
 
 t_arg		*make_t_arg_lst(char **args, char *cur_dir);
 void		print_arg(t_arg *arg);
-void		move_right(t_arg *arg);
-void		move_left(t_arg *arg);
+void		move_next(t_arg **arg);
+void		move_prev(t_arg **arg);
 void		ft_select_exit(void);
 
 

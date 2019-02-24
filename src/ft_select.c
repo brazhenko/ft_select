@@ -84,17 +84,15 @@ int				main(int ac, char **av, char **en)
 			ft_select_exit();
 		if (key == KEY_DOWN)
 		{
-			move_right(lst);
-			lst = lst->next;
+			move_next(&lst);
 		}
 		if (key == KEY_UP)
 		{
-			move_left(lst);
-			lst = lst->prev;
+			move_prev(&lst);
 		}
 		else if (key == KEY_SPC)
 		{
-			lst->is_selected = !lst->is_selected;
+			lst->is_selected = ~lst->is_selected;
 			print_arg(lst);
 		}
 		else if (key == 1111111)

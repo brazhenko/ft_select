@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/24 08:16:19 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/24 10:09:22 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,29 @@ void	print_arg(t_arg *arg)
 	gotostr = tgetstr("cm", NULL);
 	standstr = tgetstr("us", NULL); /*so se */
 	stendstr = tgetstr("ue", NULL);
-	if (arg->is_current == 1)
+	if (arg->is_current)
 	{
 		ft_putstr_fd(tgoto(gotostr, arg->col, arg->row), STDIN_FILENO);
 		ft_putstr_fd(standstr, 0);
 		ft_putstr_fd(arg->name, 0);
-		ft_putstr_fd(stendstr, 0);
 	}
-	else
+	if (arg->is_selected)
+	{
+		ft_putstr_fd(tgoto(gotostr, arg->col, arg->row), STDIN_FILENO);
+		ft_putstr_fd(tgetstr("so", NULL), 0);
+		ft_putstr_fd(arg->name, 0);
+	}
+	if (!arg->is_selected && !arg->is_current)
 	{
 		ft_putstr_fd(tgoto(gotostr, arg->col, arg->row), STDIN_FILENO);
 		ft_putstr_fd(arg->name, 0);
 
 	}
+	ft_putstr_fd(stendstr, 0);
+	ft_putstr_fd(tgetstr("se", NULL), 0);
 }
 
-void	move_right(t_arg *arg)
+void	move_next(t_arg **arg)
 {
 	char buf[1024];
 	char *gotostr;
@@ -47,20 +54,17 @@ void	move_right(t_arg *arg)
 
 	tgetent(buf, getenv("TERM"));
 	gotostr = tgetstr("cm", NULL);
-	standstr = tgetstr("so", NULL);
-	stendstr = tgetstr("se", NULL);
-	// if (arg->is_selected == 1)
-	{
-		ft_putstr_fd(tgoto(gotostr, arg->next->col, arg->next->row), STDIN_FILENO);
-		ft_putstr_fd(standstr, 0);
-		ft_putstr_fd(arg->next->name, 0);
-		ft_putstr_fd(stendstr, 0);
-		ft_putstr_fd(tgoto(gotostr, arg->col, arg->row), STDIN_FILENO);
-		ft_putstr_fd(arg->name, 0);
-	}
+	standstr = tgetstr("us", NULL);
+	stendstr = tgetstr("ue", NULL);
+
+	(*arg)->is_current = 0;
+	print_arg(*arg);
+	*arg = (*arg)->next;
+	(*arg)->is_current = 1;
+	print_arg(*arg);
 }
 
-void	move_left(t_arg *arg)
+void	move_prev(t_arg **arg)
 {
 	char buf[1024];
 	char *gotostr;
@@ -69,15 +73,12 @@ void	move_left(t_arg *arg)
 
 	tgetent(buf, getenv("TERM"));
 	gotostr = tgetstr("cm", NULL);
-	standstr = tgetstr("so", NULL);
-	stendstr = tgetstr("se", NULL);
-	// if (arg->is_selected == 1)
-	{
-		ft_putstr_fd(tgoto(gotostr, arg->prev->col, arg->prev->row), 0);
-		ft_putstr_fd(standstr, 0);
-		ft_putstr_fd(arg->prev->name, 0);
-		ft_putstr_fd(stendstr, 0);
-		ft_putstr_fd(tgoto(gotostr, arg->col, arg->row), 0);
-		ft_putstr_fd(arg->name, 0);
-	}
+	standstr = tgetstr("us", NULL);
+	stendstr = tgetstr("ue", NULL);
+
+	(*arg)->is_current = 0;
+	print_arg(*arg);
+	*arg = (*arg)->prev;
+	(*arg)->is_current = 1;
+	print_arg(*arg);
 }
