@@ -1,4 +1,4 @@
-#include "ft_select.h"
+#include "../inc/ft_select.h"
 
 void	set_keypress(void)
 {
@@ -79,6 +79,15 @@ int				main(int ac, char **av, char **en)
 			ft_strcat(cur_dir, "..");
 			lst = read_directory(cur_dir);
 			ft_strcat(cur_dir, "/");
+		}
+		else if (key == KEY_DEL)
+		{
+			delete_t_arg(&lst);
+		}
+		else if (key == KEY_ENTER)
+		{
+			return_value(lst);
+			exit (0);
 		}
 		else if (key == 1111111)
 			exit(0);

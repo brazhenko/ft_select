@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstfreeone.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmaron-g <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 17:41:38 by lmaron-g          #+#    #+#             */
-/*   Updated: 2019/02/24 09:48:27 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/25 01:26:54 by ghazrak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstfreeone(t_list **alst)
+void	ft_lstfreeone(t_arg **alst)
 {
 	if (!(alst && *alst))
 		return ;

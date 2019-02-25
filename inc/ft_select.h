@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_select.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/25 01:34:34 by ghazrak-          #+#    #+#             */
+/*   Updated: 2019/02/26 00:08:12 by ghazrak-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_SELECT_H
 # define FT_SELECT_H
 
@@ -34,22 +46,22 @@
 **			is_selected - flag of the
 */
 
-typedef struct s_arg 		t_arg;
+typedef struct s_arg		t_arg;
 typedef struct dirent		t_dirent;
 
-struct s_arg
+struct		s_arg
 {
 	t_arg	*prev;
 	t_arg	*next;
 
-	int 	col;
-	int 	row;
+	int		col;
+	int		row;
 	int		type;
-	int 	is_selected;
-	int 	is_current;
-	int 	is_begin;
-	int 	namelen;
-	char 	*name;
+	int		is_selected;
+	int		is_current;
+	int		is_begin;
+	int		namelen;
+	char	*name;
 };
 
 t_arg		*make_t_arg_lst(char **args, char *cur_dir);
@@ -59,8 +71,8 @@ void		print_arg(t_arg *arg);
 void		print_all_args(t_arg *arg);
 void		move_arg(t_arg **arg, char *direction);
 void		ft_select_exit(void);
-t_arg 		*read_directory(char *path);
-
+t_arg		*read_directory(char *path);
+void		return_value(t_arg *arg);
 
 
 
