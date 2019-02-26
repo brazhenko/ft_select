@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 07:54:43 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 19:03:58 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 20:39:41 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char		**read_directory(char *path)
 	i = 0;
 	new = (char**)malloc(sizeof(char*) * 500);
 	if (!(fd = opendir(path)))
-		exit(EXIT_FAILURE);
+		return (NULL);
 	while ((ret = readdir(fd)))
 	{
 		if (!ft_strnequ(ret->d_name, ".", 1))
@@ -31,7 +31,7 @@ char		**read_directory(char *path)
 			i++;
 		}
 	}
-	if (!*new)
+	if (!i)
 		return (NULL);
 	return (new);
 }
@@ -45,12 +45,18 @@ void		return_value(t_arg *arg)
 	while (arg->is_begin != 1)
 		arg = arg->next;
 	if (arg->is_selected)
+	{
 		ft_putstr_fd(arg->name, 0);
+		write(1, " ", 1);
+	}
 	arg = arg->next;
 	while (arg->is_begin == 0)
 	{
 		if (arg->is_selected)
+		{
 			ft_putstr_fd(arg->name, 0);
+			write(1, " ", 1);
+		}
 		arg = arg->next;
 	}
 	exit(EXIT_SUCCESS);

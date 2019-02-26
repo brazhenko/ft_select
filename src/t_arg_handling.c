@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 04:40:33 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 19:42:35 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 20:34:36 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_arg		*make_t_arg_lst(char **args, char *cur_dir)
 	t_arg	*node_cpy;
 	int		i;
 
-	if (!args || !*args)
+	if (!args)
 		return (NULL);
 	i = 0;
 	node = new_t_arg(args[i]);

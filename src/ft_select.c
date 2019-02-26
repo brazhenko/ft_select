@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 20:14:23 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 20:55:14 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,32 @@ void			print_all_args_handler(int n)
 
 static void		prompt(int ac, char **av)
 {
+	struct ttysize	ts;
+	int				start_loading_col;
+
+	ioctl(0, TIOCGSIZE, &ts);
+	start_loading_col = ts.ts_cols / 2 - ts.ts_cols / 8;
 	if (ac < 2)
 		print_usage();
 	set_keypress(1);
 	init_window(1);
+	ft_putstr_fd(tgoto(CM, start_loading_col, ts.ts_lines / 2), STDIN_FILENO);
+	while (start_loading_col < ts.ts_cols / 2 + ts.ts_cols / 8)
+	{
+		usleep(12000);
+		write(1, "*", 1);
+		start_loading_col++;
+	}
 	g_lst = make_t_arg_lst(av + 1, NULL);
 	print_all_args(g_lst);
 }
 
 static void		tab_command(void)
 {
+	if (!g_lst)
+		return ;
 	ft_strcat(g_cur_dir, g_lst->name);
-	if (g_lst->type == 1 && access(g_cur_dir, 4) == 0)
+	if (access(g_cur_dir, 4) == 0 && g_lst->type == 1)
 	{
 		g_lst = make_t_arg_lst(read_directory(g_cur_dir), NULL);
 		ft_strcat(g_cur_dir, "/");
