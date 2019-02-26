@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 07:34:09 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 12:08:09 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ void	print_all_args(t_arg *arg)
 		return ;
 	while (!arg->is_begin)
 		arg = arg->next;
-	do
+	print_arg(arg);
+	arg = arg->next;
+	while (!arg->is_begin)
 	{
 		print_arg(arg);
 		arg = arg->next;
 	}
-	while (!arg->is_begin);
 }
 
 void	move_arg(t_arg **arg, char *direction)

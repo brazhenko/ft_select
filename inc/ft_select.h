@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 01:34:34 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 10:14:42 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 11:50:29 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ struct		s_arg
 	char	*name;
 };
 
-t_arg		*to_first_arg(t_arg *node)
-t_arg		*make_t_arg_lst(char **args, char *cur_dir);
+t_arg		*to_first_arg(t_arg *node);
+t_arg		*make_t_arg_lst(char **args);
 
 void		init_window(int);
 void		set_keypress(int status);
@@ -90,9 +90,11 @@ t_arg		*delete_t_arg(t_arg *arg);
 void		print_arg(t_arg *arg);
 void		print_all_args(t_arg *arg);
 void		move_arg(t_arg **arg, char *direction);
+int			t_arg_resize(t_arg *node);
+
 
 void		ft_select_exit(int exit_param);
-t_arg		*read_directory(char *path);
+char		**read_directory(char *path);
 void		return_value(t_arg *arg);
 
 #endif

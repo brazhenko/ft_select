@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 08:34:58 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 12:29:41 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	set_keypress(int status)
 		tcsetattr(0, TCSANOW, &stored_settings);
 }
 
+
 void	init_window(int status)
 {
 
@@ -37,17 +38,20 @@ void	init_window(int status)
 	int ok;
 
 	ok = tgetent(buf, termtype);
-	if (status)
+	ft_putstr(CL);
+	if (status == 1)
 	{
-		tputs(TI, 1, putchar);	/* запуск терминала */
-		tputs(VI, 1, putchar);	/* Невидимый курсор */
-		tputs(CL, 1, putchar);	/* очистка экрана */
+		ft_putstr(VI);
+		ft_putstr(VI);
+//		tputs(TI, 1, putchar);	/* запуск терминала */
+//		tputs(VI, 1, putchar);	/* Невидимый курсор */
 	}
 	else
 	{
-		tputs(TE, 1, putchar);
-		tputs(VE, 1, putchar);
-		tputs(CL, 1, putchar);
+		ft_putstr(TE);
+		ft_putstr(VE);
+//		tputs(TE, 1, putchar);
+//		tputs(VE, 1, putchar);
 	}
 }
 
@@ -71,9 +75,11 @@ int				main(int ac, char **av, char **en)
 		print_usage();
 	ft_strcat(cur_dir, "/");
 	//lst = make_t_arg_lst(av + 1, cur_dir);
+	set_keypress(1);
 	init_window(1);
-	//print_all_args(lst);
-	lst = read_directory(".");
+	lst = make_t_arg_lst(av + 1);
+	printf("%d\n", t_arg_resize(lst));
+	print_all_args(lst);
 	while (1)
 	{
 		set_keypress(1);
@@ -92,13 +98,13 @@ int				main(int ac, char **av, char **en)
 		else if (key == KEY_TAB)
 		{
 			ft_strcat(cur_dir, lst->name);
-			lst = read_directory(cur_dir);
+			lst = make_t_arg_lst(read_directory(cur_dir));
 			ft_strcat(cur_dir, "/");
 		}
 		else if (key == KEY_BACKSPACE)
 		{
 			ft_strcat(cur_dir, "..");
-			lst = read_directory(cur_dir);
+			lst = make_t_arg_lst(read_directory(cur_dir));
 			ft_strcat(cur_dir, "/");
 		}
 		else if (key == KEY_DEL)

@@ -4,7 +4,8 @@ SRC                 = src/ft_select.c \
 					  src/process_command.c \
 					  src/ft_move.c \
 					  src/ft_select_exit.c \
-					  src/read_directory.c
+					  src/read_directory.c \
+					  src/ft_size.c 
 
 LIB 				= libft/libft.a
 CC                  = clang
