@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 14:18:41 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 14:55:56 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,20 @@ void			print_usage(void)
 
 extern char		**environ;
 
+t_arg			*lst;
+
+void				print_all_args_handler(int n)
+{
+	print_all_args(lst);
+}
 
 int				main(int ac, char **av, char **en)
 {
 	long	key = 0;
-	t_arg	*lst;
 	char 	cur_dir[2048] = "./";
 
 	signal(SIGINT, ft_select_exit);
-//	signal(SIGWINCH, t_arg_resize_decorator(lst));
+	signal(SIGWINCH, print_all_args_handler);
 	if (ac < 2)
 		print_usage();
 	lst = make_t_arg_lst(av + 1);
