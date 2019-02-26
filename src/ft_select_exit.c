@@ -6,11 +6,17 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 07:48:36 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 18:32:22 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 19:40:04 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
+void			print_usage(void)
+{
+	write(1, "usage: ./ft_select [arg1] [arg2] [arg3] ...\n", 45);
+	exit(EXIT_SUCCESS);
+}
 
 void			ft_select_interrupt(int exit_param)
 {

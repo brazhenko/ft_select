@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 18:48:18 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 19:41:06 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,56 +15,40 @@
 t_arg		*g_lst;
 char		g_cur_dir[2048] = "./";
 
-void			set_keypress(int status)
-{
-	static struct termios	stored_settings;
-	static struct termios	new_settings;
-	static int				used = 0;
-
-	if (!used)
-	{
-		used++;
-		tcgetattr(0, &stored_settings);
-	}
-	new_settings = stored_settings;
-	new_settings.c_lflag &= (~ICANON & ~ECHO);
-	new_settings.c_cc[VTIME] = 0;
-	new_settings.c_cc[VMIN] = 1;
-	if (status)
-		tcsetattr(0, TCSANOW, &new_settings);
-	else if (!status)
-		tcsetattr(0, TCSANOW, &stored_settings);
-}
-
-void			init_window(int status)
-{
-	char	buf[1024];
-	char	*termtype;
-	int		ok;
-
-	termtype = getenv("TERM");
-	ok = tgetent(buf, termtype);
-	ft_putstr(CL);
-	if (status == 1)
-	{
-		ft_putstr(VI);
-		ft_putstr(VI);
-	}
-	else
-	{
-		ft_putstr(TE);
-		ft_putstr(VE);
-	}
-}
-
-void			print_usage(void)
-{
-	write(1, "usage: ./ft_select [arg1] [arg2] [arg3] ...\n", 45);
-	exit(EXIT_SUCCESS);
-}
-
 void			print_all_args_handler(int n)
 {
+	print_all_args(g_lst);
+}
+
+static void		prompt(int ac, char **av)
+{
+	if (ac < 2)
+		print_usage();
+	set_keypress(1);
+	init_window(1);
+	g_lst = make_t_arg_lst(av + 1, NULL);
+	print_all_args(g_lst);
+}
+
+static void		tab_command(void)
+{
+	ft_strcat(g_cur_dir, g_lst->name);
+	ft_putstr(g_cur_dir);
+	if (g_lst->type == 1 && access(g_cur_dir, 4) == 0)
+	{
+		g_lst = make_t_arg_lst(read_directory(g_cur_dir), NULL);
+		ft_strcat(g_cur_dir, "/");
+		print_all_args(g_lst);
+	}
+	else
+		g_cur_dir[ft_strlen(g_cur_dir) - ft_strlen(g_lst->name)] = 0;
+}
+
+static void		backspace_command(void)
+{
+	ft_strcat(g_cur_dir, "..");
+	g_lst = make_t_arg_lst(read_directory(g_cur_dir), NULL);
+	ft_strcat(g_cur_dir, "/");
 	print_all_args(g_lst);
 }
 
@@ -73,14 +57,8 @@ int				main(int ac, char **av, char **en)
 	long	key;
 
 	signal(SIGINT, ft_select_exit);
-	// signal(SIGTSTP, ft_select_interrupt);
 	signal(SIGWINCH, print_all_args_handler);
-	if (ac < 2)
-		print_usage();
-	set_keypress(1);
-	init_window(1);
-	g_lst = make_t_arg_lst(av + 1, NULL);
-	print_all_args(g_lst);
+	prompt(ac, av);
 	while (1)
 	{
 		set_keypress(1);
@@ -88,44 +66,17 @@ int				main(int ac, char **av, char **en)
 		read(STDIN_FILENO, &key, 8);
 		if (key == KEY_ESC)
 			ft_select_exit(1);
-		else if (key == KEY_DOWN)
-			move_arg(&g_lst, "next");
-		else if (key == KEY_UP)
-			move_arg(&g_lst, "prev");
+		else if (is_key_navigation(key))
+			move_arg(&g_lst, key);
 		else if (key == KEY_SPC)
-		{
-			g_lst->is_selected = ~g_lst->is_selected;
-			print_arg(g_lst);
-		}
+			space_command(g_lst);
 		else if (key == KEY_TAB)
-		{
-			ft_strcat(g_cur_dir, g_lst->name);
-			ft_putstr(g_cur_dir);
-			if (g_lst->type == 1 && access(g_cur_dir, 4) == 0)
-			{
-				g_lst = make_t_arg_lst(read_directory(g_cur_dir), NULL);
-				ft_strcat(g_cur_dir, "/");
-				print_all_args(g_lst);
-			}
-			else
-				g_cur_dir[ft_strlen(g_cur_dir) - ft_strlen(g_lst->name)] = 0;
-		}
+			tab_command();
 		else if (key == KEY_BACKSPACE)
-		{
-			ft_strcat(g_cur_dir, "..");
-			g_lst = make_t_arg_lst(read_directory(g_cur_dir), NULL);
-			ft_strcat(g_cur_dir, "/");
-			print_all_args(g_lst);
-		}
+			backspace_command();
 		else if (key == KEY_DEL)
-		{
 			g_lst = delete_t_arg(g_lst);
-			print_all_args(g_lst);
-		}
 		else if (key == KEY_ENTER)
-		{
 			return_value(g_lst);
-			exit(0);
-		}
 	}
 }

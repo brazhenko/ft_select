@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 18:36:34 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 19:27:52 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	print_all_args(t_arg *arg)
 	set_keypress(1);
 	init_window(1);
 	if (!arg)
-		return ;
+		ft_select_exit(1);
 	if (!t_arg_resize(arg))
 	{
 		write(1, "plz make window bigger\n", 24);
@@ -82,14 +82,29 @@ void	print_all_args(t_arg *arg)
 	}
 }
 
-void	move_arg(t_arg **arg, char *direction)
+void	move_arg(t_arg **arg, long direction)
 {
+	int		cur_row;
+
+	cur_row = (*arg)->row;
 	(*arg)->is_current = 0;
 	print_arg(*arg);
-	if (ft_strequ("prev", direction))
+	if (KEY_UP == direction)
 		*arg = (*arg)->prev;
-	if (ft_strequ("next", direction))
+	else if (KEY_DOWN == direction)
 		*arg = (*arg)->next;
+	else if (KEY_RIGHT == direction)
+	{
+		*arg = (*arg)->next;
+		while ((*arg)->row != cur_row)
+			*arg = (*arg)->next;
+	}
+	else if (KEY_LEFT == direction)
+	{
+		*arg = (*arg)->prev;
+		while ((*arg)->row != cur_row)
+			*arg = (*arg)->prev;
+	}
 	(*arg)->is_current = 1;
 	print_arg(*arg);
 }

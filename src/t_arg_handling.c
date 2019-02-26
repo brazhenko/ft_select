@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 04:40:33 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 18:59:04 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 19:42:35 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,7 @@ t_arg		*delete_t_arg(t_arg *arg)
 	arg = arg->next == arg ? NULL : arg->next;
 	arg ? arg->is_current = 1 : 0;
 	copy = arg;
-	while (arg && arg->is_begin != 1)
-	{
-		arg->row--;
-		arg = arg->next;
-	}
-	arg ? print_all_args(arg) : exit(0);
+	arg ? print_all_args(arg) : ft_select_exit(1);
 	return (copy);
 }
 

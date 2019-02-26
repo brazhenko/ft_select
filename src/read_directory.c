@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 07:54:43 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 18:27:00 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 18:27:19 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ void		return_value(t_arg *arg)
 			ft_putstr_fd(arg->name, 0);
 		arg = arg->next;
 	}
+	exit(EXIT_SUCCESS);
 }
