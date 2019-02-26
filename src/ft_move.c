@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 19:27:52 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 19:30:43 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	print_all_args(t_arg *arg)
 	set_keypress(1);
 	init_window(1);
 	if (!arg)
-		ft_select_exit(1);
+		return ;
 	if (!t_arg_resize(arg))
 	{
 		write(1, "plz make window bigger\n", 24);

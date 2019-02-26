@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 07:54:43 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 18:27:19 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 19:03:58 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char		**read_directory(char *path)
 	int			i;
 
 	i = 0;
-	new = (char**)malloc(sizeof(char*) * 200);
+	new = (char**)malloc(sizeof(char*) * 500);
 	if (!(fd = opendir(path)))
 		exit(EXIT_FAILURE);
 	while ((ret = readdir(fd)))

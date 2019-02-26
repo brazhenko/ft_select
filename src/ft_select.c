@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 19:41:06 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 20:14:23 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void		prompt(int ac, char **av)
 static void		tab_command(void)
 {
 	ft_strcat(g_cur_dir, g_lst->name);
-	ft_putstr(g_cur_dir);
 	if (g_lst->type == 1 && access(g_cur_dir, 4) == 0)
 	{
 		g_lst = make_t_arg_lst(read_directory(g_cur_dir), NULL);

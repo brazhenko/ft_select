@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 01:34:34 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 19:36:02 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 19:41:46 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef struct dirent		t_dirent;
 **			is_selected - flag of the
 */
 
-
 typedef struct s_arg		t_arg;
 
 struct		s_arg
@@ -110,7 +109,6 @@ int			t_arg_resize(t_arg *node);
 void		ft_select_exit(int exit_param);
 void		ft_select_interrupt(int exit_param);
 void		print_usage(void);
-
 
 char		**read_directory(char *path);
 void		return_value(t_arg *arg);
