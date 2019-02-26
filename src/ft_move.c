@@ -6,11 +6,38 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/24 22:12:06 by ghazrak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 05:32:00 by ghazrak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_select.h"
+
+void	print_color(char *name)
+{
+	struct stat buf;
+
+	lstat(name, &buf);
+	if (S_ISDIR(buf.st_mode))
+	{
+		ft_putstr_fd("\x1B[34m", 0);
+		ft_putstr_fd(name, 0);
+		ft_putstr_fd("\x1B[0m", 0);
+	}
+	else if (S_ISLNK(buf.st_mode))
+	{
+		ft_putstr_fd("\x1B[35m", 0);
+		ft_putstr_fd(name, 0);
+		ft_putstr_fd("\x1B[0m", 0);
+	}
+	else if (!access(name, 1))
+	{
+		ft_putstr_fd("\x1B[31m", 0);
+		ft_putstr_fd(name, 0);
+		ft_putstr_fd("\x1B[0m", 0);
+	}
+	else
+		ft_putstr_fd(name, 0);
+}
 
 void	print_arg(t_arg *arg)
 {
@@ -24,7 +51,7 @@ void	print_arg(t_arg *arg)
 		ft_putstr_fd(tgetstr("us", NULL), 0);
 	if (arg->is_selected)
 		ft_putstr_fd(tgetstr("so", NULL), 0);
-	ft_putstr_fd(arg->name, 0);
+	print_color(arg->name);
 	ft_putstr_fd(tgetstr("ue", NULL), 0);
 	ft_putstr_fd(tgetstr("se", NULL), 0);
 }

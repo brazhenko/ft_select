@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 01:34:34 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 00:08:12 by ghazrak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 05:30:16 by ghazrak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <termcap.h>
 # include <sys/stat.h>
 # include <dirent.h>
+# include <sys/types.h>
 
 /*
 **	Defines of needed keys.
@@ -66,7 +67,7 @@ struct		s_arg
 
 t_arg		*make_t_arg_lst(char **args, char *cur_dir);
 void		init_window(void);
-void		delete_t_arg(t_arg **arg);
+t_arg		*delete_t_arg(t_arg *arg);
 void		print_arg(t_arg *arg);
 void		print_all_args(t_arg *arg);
 void		move_arg(t_arg **arg, char *direction);

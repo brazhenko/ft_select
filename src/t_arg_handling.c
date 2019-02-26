@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 04:40:33 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 00:22:12 by ghazrak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 05:36:43 by ghazrak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,54 @@ t_arg		*new_t_arg(char *name, char *cur_dir)
 	return (new);
 }
 
-
-void		delete_t_arg(t_arg **arg)
+t_arg		*delete_t_arg(t_arg *arg)
 {
 	char	*tmp;
-	if (!(*arg))
-		return ;
-	ft_putstr_fd(tgetstr("cl",0), 0);
-	(*arg)->prev->next = (*arg)->next;
-	(*arg)->next->prev = (*arg)->prev;
-	(*arg) = (*arg)->prev == (*arg) ? NULL : (*arg)->prev;
-	(*arg)->is_current = 1;
-	tmp = (*arg)->name;
-	print_all_args(*arg);
+	t_arg	*copy;
+	t_arg	*ololo;
+
+	if (!(arg))
+		exit(0);
+	ft_putstr_fd(tgetstr("cl", 0), 0);
+	if (arg->is_begin == 1)
+	{
+		ololo = arg->next;
+		arg->next->is_begin = 1;
+		while (ololo != arg)
+		{
+			ololo->row--;
+			ololo = ololo->next;
+		}
+	}
+	arg->prev->next = arg->next;
+	(arg)->next->prev = arg->prev;
+	arg = arg->next == arg ? NULL : arg->next;
+	arg ? arg->is_current = 1 : 0;
+	copy = arg;
+	while (arg && arg->is_begin != 1)
+	{
+		arg->row--;
+		arg = arg->next;
+	}
+	arg ? print_all_args(arg) : exit(0);
+	return (copy);
 }
 
 t_arg		*make_t_arg_lst(char **args, char *cur_dir)
 {
 	t_arg	*node;
 	t_arg	*node_cpy;
-	int 	i;
+	int		i;
 
 	i = 0;
 	node = new_t_arg(args[i], cur_dir);
 	node->row = i;
 	node_cpy = node;
-	node->is_current = node->is_begin = 1;
+	node->is_current = 1;
+	node->is_begin = 1;
 	i++;
 	while (args[i])
 	{
-
 		node->next = new_t_arg(args[i], cur_dir);
 		node->next->prev = node;
 		node = node->next;

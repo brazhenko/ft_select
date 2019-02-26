@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_select.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
+/*   Updated: 2019/02/26 05:37:30 by ghazrak-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/ft_select.h"
 
 void	set_keypress(void)
@@ -50,9 +62,10 @@ int				main(int ac, char **av, char **en)
 	if (ac < 2)
 		print_usage();
 	ft_strcat(cur_dir, "/");
-	lst = make_t_arg_lst(av + 1, cur_dir);
+	//lst = make_t_arg_lst(av + 1, cur_dir);
 	init_window();
-	print_all_args(lst);
+	//print_all_args(lst);
+	lst = read_directory(".");
 	while (1)
 	{
 		set_keypress();
@@ -82,7 +95,7 @@ int				main(int ac, char **av, char **en)
 		}
 		else if (key == KEY_DEL)
 		{
-			delete_t_arg(&lst);
+			lst = delete_t_arg(lst);
 		}
 		else if (key == KEY_ENTER)
 		{

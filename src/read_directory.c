@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 07:54:43 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 00:35:47 by ghazrak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 05:30:25 by ghazrak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_arg 		*read_directory(char *path)
 	t_arg		*arg;
 
 	i = 0;
-	char *test1=tgetstr("cl",0);
+	char *test1 = tgetstr("cl",0);
 	printf("%s\n", test1);
 	new = (char**)malloc(sizeof(char*) * 1000);
 	if (!(fd = opendir(path)))
@@ -52,9 +52,7 @@ void	return_value(t_arg *arg)
 	while(ft_strcmp(tmp, arg->next->name) != 0)
 	{
 		if (arg->is_selected)
-		{
 			printf("%s ", arg->name);
-		}
 		arg = arg->next;
 	}
 }
