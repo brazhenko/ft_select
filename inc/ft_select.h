@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 01:34:34 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 12:14:31 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:12:05 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/types.h>
 # include <sys/ioctl.h>
 # include <signal.h>
+
 /*
 **	Defines of needed keys.
 */
@@ -42,28 +43,38 @@
 
 /*
 **	Defines of tgetstr arguments
+**
+** 	so - highlight start
+** 	se - highlight end
+** 	cl  -screen eraser
+** 	cm - cursor change
+** 	vi - invisible cursor
+** 	ve - visible cursor
+** 	ti - begin of terminal
+**	te - end of terminal
 */
 
-# define SO (tgetstr("so", NULL)) //начало выделения
-# define SE (tgetstr("se", NULL)) //конец выделения
-# define CL (tgetstr("cl", NULL)) //чистит экран
-# define CM (tgetstr("cm", NULL)) //перемещение курсора
-# define VE (tgetstr("ve", NULL)) //видимый курсов
-# define VI (tgetstr("vi", NULL)) //невидимый курсор
-# define US (tgetstr("us", NULL)) //начало подчеркивания
-# define TE (tgetstr("te", NULL)) //конец программы
-# define TI (tgetstr("ti", NULL)) //начало программs
+# define SO (tgetstr("so", NULL))
+# define SE (tgetstr("se", NULL))
+# define CL (tgetstr("cl", NULL))
+# define CM (tgetstr("cm", NULL))
+# define VE (tgetstr("ve", NULL))
+# define VI (tgetstr("vi", NULL))
+# define US (tgetstr("us", NULL))
+# define TE (tgetstr("te", NULL))
+# define TI (tgetstr("ti", NULL))
 
 /*
 **			t_arg (aka struct s_arg):
 **
 **			col, row - coordinates at the output
-** 			type: 0 - usual file or smth else, 1 - directory, 2 - binary, 3 - symlink
+** 			type: 0 - usual file or smth else, 1 - directory,
+** 			2 - binary, 3 - symlink
 **			is_selected - flag of the
 */
 
-typedef struct s_arg		t_arg;
 typedef struct dirent		t_dirent;
+typedef struct s_arg		t_arg;
 
 struct		s_arg
 {
@@ -81,9 +92,9 @@ struct		s_arg
 };
 
 t_arg		*to_first_arg(t_arg *node);
-t_arg		*make_t_arg_lst(char **args);
+t_arg		*make_t_arg_lst(char **args, char *cur_dir);
 
-void		init_window(int);
+void		init_window(int status);
 void		set_keypress(int status);
 
 t_arg		*delete_t_arg(t_arg *arg);

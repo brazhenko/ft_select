@@ -6,17 +6,22 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 14:31:44 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:15:52 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
+extern char g_cur_dir[];
+
 void	print_color(char *name)
 {
-	struct stat buf;
+	struct stat		buf;
+	char			dir[2048];
 
-	lstat(name, &buf);
+	ft_strcpy(dir, g_cur_dir);
+	ft_strcpy(dir + ft_strlen(dir), name);
+	lstat(dir, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
 		ft_putstr_fd("\x1B[34m", 0);
@@ -58,7 +63,6 @@ void	print_arg(t_arg *arg)
 
 void	print_all_args(t_arg *arg)
 {
-
 	if (!arg)
 		return ;
 	set_keypress(1);

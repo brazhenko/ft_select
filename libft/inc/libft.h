@@ -6,7 +6,7 @@
 /*   By: lreznak- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 18:19:29 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/24 09:48:27 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:13:37 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct		s_dcl
 	struct s_dcl							*previous;
 }					t_dcl;
 
-typedef struct 		s_matrix
+typedef struct		s_matrix
 {
 	int			rowc;
 	int			colc;
@@ -119,7 +119,6 @@ void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_nputchar(int n, char c);
 
-
 int					dcl_rpn(t_dcl *elem);
 void				dcl_el_printer(t_dcl *elem);
 void				dcl_printer(t_dcl *elem);
@@ -147,6 +146,5 @@ int					calc(char *expr);
 t_matrix			*make_matrix(int rowc, int colc, int *arr, int n);
 void				print_matrix(t_matrix *matrix);
 t_matrix			*add_matrix(t_matrix *left, t_matrix *right);
-
 
 #endif
