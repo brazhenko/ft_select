@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 01:34:34 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 07:58:20 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 08:01:00 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/ioctl.h>
+# include <signal.h>
 /*
 **	Defines of needed keys.
 */
