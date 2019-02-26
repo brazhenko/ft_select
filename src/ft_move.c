@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 12:08:09 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 13:39:18 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,16 @@ void	print_arg(t_arg *arg)
 
 void	print_all_args(t_arg *arg)
 {
+
 	if (!arg)
 		return ;
+	set_keypress(1);
+	init_window(1);
+	if (!t_arg_resize(arg))
+	{
+		write(1, "plz make window bigger\n", 24);
+		return ;
+	}
 	while (!arg->is_begin)
 		arg = arg->next;
 	print_arg(arg);

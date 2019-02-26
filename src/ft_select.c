@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 12:29:41 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 14:18:41 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@ void	set_keypress(int status)
 {
 	static struct termios stored_settings;
 	static struct termios new_settings;
+	static int used = 0;
 
-	if (status)
+	if (!used)
+	{
+		used++;
 		tcgetattr(0, &stored_settings);
+	}
 	new_settings = stored_settings;
 	new_settings.c_lflag &= (~ICANON & ~ECHO);
 	new_settings.c_cc[VTIME] = 0;
@@ -63,22 +67,18 @@ void			print_usage(void)
 
 extern char		**environ;
 
+
 int				main(int ac, char **av, char **en)
 {
 	long	key = 0;
 	t_arg	*lst;
-	char 	cur_dir[2048] = ".";
+	char 	cur_dir[2048] = "./";
 
 	signal(SIGINT, ft_select_exit);
-	signal(SIGWINCH, ft_select_exit);
+//	signal(SIGWINCH, t_arg_resize_decorator(lst));
 	if (ac < 2)
 		print_usage();
-	ft_strcat(cur_dir, "/");
-	//lst = make_t_arg_lst(av + 1, cur_dir);
-	set_keypress(1);
-	init_window(1);
 	lst = make_t_arg_lst(av + 1);
-	printf("%d\n", t_arg_resize(lst));
 	print_all_args(lst);
 	while (1)
 	{
@@ -100,11 +100,14 @@ int				main(int ac, char **av, char **en)
 			ft_strcat(cur_dir, lst->name);
 			lst = make_t_arg_lst(read_directory(cur_dir));
 			ft_strcat(cur_dir, "/");
+
+			print_all_args(lst);
 		}
 		else if (key == KEY_BACKSPACE)
 		{
 			ft_strcat(cur_dir, "..");
 			lst = make_t_arg_lst(read_directory(cur_dir));
+			print_all_args(lst);
 			ft_strcat(cur_dir, "/");
 		}
 		else if (key == KEY_DEL)
