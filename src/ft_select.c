@@ -6,43 +6,63 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 05:37:30 by ghazrak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 07:55:17 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_select.h"
 
-void	set_keypress(void)
+void	set_keypress(int status)
 {
 	static struct termios stored_settings;
+	static struct termios new_settings;
 
-	struct termios new_settings;
-
-	tcgetattr(0,&stored_settings);
-
+	if (status)
+		tcgetattr(0, &stored_settings);
 	new_settings = stored_settings;
-
 	new_settings.c_lflag &= (~ICANON & ~ECHO);
 	new_settings.c_cc[VTIME] = 0;
 	new_settings.c_cc[VMIN] = 1;
+	if (status)
+		tcsetattr(0,TCSANOW,&new_settings);
+	else if (!status)
+	{
+		tcsetattr(0, TCSANOW, &stored_settings);
 
-	tcsetattr(0,TCSANOW,&new_settings);
+	}
 }
 
-void	init_window(void)
+void	init_window(int status)
 {
 
 	char buf[1024];
 	char *termtype=getenv("TERM");
-	int ok=tgetent(buf,termtype);
-	char *test1=tgetstr("cl",0); /* очистка экрана */
+	char *clstr;
+	char *test2;
+	char *test3;
+	int ok;
 
-	char *clstr=tgetstr("ti",0); /* запуск терминала */
-	char *test2=tgetstr("vi",0); /*  */
-	char *test3 = tgetstr("nd", 0);
+	ok = tgetent(buf, termtype);
+	if (status)
+	{
 
+//		char *test1 = tgetstr("cl", 0); /* очистка экрана */
+//
+//		char *clstr = tgetstr("ti", 0); /* запуск терминала */
+//		char *test2 = tgetstr("vi", 0); /* Невидимый курсор */
+//		char *test3 = tgetstr("nd", 0);
+		tputs(TI, 1, putchar);
+		tputs(VI, 1, putchar);
+		tputs(CL, 1, putchar);
+	}
+	else
+	{
+		tputs(TE, 1, putchar);
+		tputs(VE, 1, putchar);
+		tputs(CL, 1, putchar);
+	}
 
-	printf("%s%s%s\n", clstr, test1, test2);
+	// printf("%s%s%s\n", clstr, test1, test2);
 }
 
 void			print_usage(void)
@@ -63,12 +83,12 @@ int				main(int ac, char **av, char **en)
 		print_usage();
 	ft_strcat(cur_dir, "/");
 	//lst = make_t_arg_lst(av + 1, cur_dir);
-	init_window();
+	init_window(1);
 	//print_all_args(lst);
 	lst = read_directory(".");
 	while (1)
 	{
-		set_keypress();
+		set_keypress(1);
 		read(STDIN_FILENO, &key, 8);
 		if (key == KEY_ESC)
 			ft_select_exit();

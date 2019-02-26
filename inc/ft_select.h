@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 01:34:34 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 05:30:16 by ghazrak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 07:58:20 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <sys/types.h>
-
+# include <sys/ioctl.h>
 /*
 **	Defines of needed keys.
 */
@@ -38,6 +38,20 @@
 # define KEY_TAB			9
 # define KEY_SPC			32
 # define KEY_ENTER			10
+
+/*
+**	Defines of tgetstr arguments
+*/
+
+# define SO (tgetstr("so", NULL)) //начало выделения
+# define SE (tgetstr("se", NULL)) //конец выделения
+# define CL (tgetstr("cl", NULL)) //чистит экран
+# define CM (tgetstr("cm", NULL)) //перемещение курсора
+# define VE (tgetstr("ve", NULL)) //видимый курсов
+# define VI (tgetstr("vi", NULL)) //невидимый курсор
+# define US (tgetstr("us", NULL)) //начало подчеркивания
+# define TE (tgetstr("te", NULL)) //конец программы
+# define TI (tgetstr("ti", NULL)) //начало программs
 
 /*
 **			t_arg (aka struct s_arg):
@@ -66,7 +80,7 @@ struct		s_arg
 };
 
 t_arg		*make_t_arg_lst(char **args, char *cur_dir);
-void		init_window(void);
+void		init_window(int);
 t_arg		*delete_t_arg(t_arg *arg);
 void		print_arg(t_arg *arg);
 void		print_all_args(t_arg *arg);
@@ -74,6 +88,7 @@ void		move_arg(t_arg **arg, char *direction);
 void		ft_select_exit(void);
 t_arg		*read_directory(char *path);
 void		return_value(t_arg *arg);
+void		set_keypress(int status);
 
 
 
