@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 17:43:58 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 18:48:18 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,12 @@ int				main(int ac, char **av, char **en)
 	long	key;
 
 	signal(SIGINT, ft_select_exit);
-	signal(SIGTSTP, ft_select_interrupt);
+	// signal(SIGTSTP, ft_select_interrupt);
 	signal(SIGWINCH, print_all_args_handler);
 	if (ac < 2)
 		print_usage();
+	set_keypress(1);
+	init_window(1);
 	g_lst = make_t_arg_lst(av + 1, NULL);
 	print_all_args(g_lst);
 	while (1)
@@ -118,6 +120,7 @@ int				main(int ac, char **av, char **en)
 		else if (key == KEY_DEL)
 		{
 			g_lst = delete_t_arg(g_lst);
+			print_all_args(g_lst);
 		}
 		else if (key == KEY_ENTER)
 		{

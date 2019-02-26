@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 04:40:33 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 17:38:13 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 18:59:04 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,28 @@ t_arg		*new_t_arg(char *name)
 	return (new);
 }
 
+void		free_t_arg(t_arg *arg)
+{
+	free(arg->name);
+	free(arg);
+}
+
 t_arg		*delete_t_arg(t_arg *arg)
 {
-	char	*tmp;
 	t_arg	*copy;
-	t_arg	*ololo;
+	t_arg	*tmp;
 
 	ft_putstr_fd(tgetstr("cl", 0), 0);
 	if (!(arg))
 		ft_select_exit(1);
 	if (arg->is_begin == 1)
 	{
-		ololo = arg->next;
+		tmp = arg->next;
 		arg->next->is_begin = 1;
-		while (ololo != arg)
+		while (tmp != arg)
 		{
-			ololo->row--;
-			ololo = ololo->next;
+			tmp->row--;
+			tmp = tmp->next;
 		}
 	}
 	arg->prev->next = arg->next;
