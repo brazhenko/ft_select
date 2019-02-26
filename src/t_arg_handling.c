@@ -6,11 +6,18 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 04:40:33 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 07:33:23 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 07:34:09 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_select.h"
+#include "ft_select.h"
+
+t_arg		*to_first_arg(t_arg *node)
+{
+	while (!node->is_begin)
+		node = node->next;
+	return (node);
+}
 
 t_arg		*new_t_arg(char *name, char *cur_dir)
 {

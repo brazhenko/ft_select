@@ -6,11 +6,11 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 07:33:23 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 07:34:09 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_select.h"
+#include "ft_select.h"
 
 void	print_color(char *name)
 {

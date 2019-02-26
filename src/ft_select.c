@@ -6,11 +6,11 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 07:55:17 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 08:34:58 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_select.h"
+#include "ft_select.h"
 
 void	set_keypress(int status)
 {
@@ -26,10 +26,7 @@ void	set_keypress(int status)
 	if (status)
 		tcsetattr(0,TCSANOW,&new_settings);
 	else if (!status)
-	{
 		tcsetattr(0, TCSANOW, &stored_settings);
-
-	}
 }
 
 void	init_window(int status)
@@ -37,23 +34,14 @@ void	init_window(int status)
 
 	char buf[1024];
 	char *termtype=getenv("TERM");
-	char *clstr;
-	char *test2;
-	char *test3;
 	int ok;
 
 	ok = tgetent(buf, termtype);
 	if (status)
 	{
-
-//		char *test1 = tgetstr("cl", 0); /* очистка экрана */
-//
-//		char *clstr = tgetstr("ti", 0); /* запуск терминала */
-//		char *test2 = tgetstr("vi", 0); /* Невидимый курсор */
-//		char *test3 = tgetstr("nd", 0);
-		tputs(TI, 1, putchar);
-		tputs(VI, 1, putchar);
-		tputs(CL, 1, putchar);
+		tputs(TI, 1, putchar);	/* запуск терминала */
+		tputs(VI, 1, putchar);	/* Невидимый курсор */
+		tputs(CL, 1, putchar);	/* очистка экрана */
 	}
 	else
 	{
@@ -61,8 +49,6 @@ void	init_window(int status)
 		tputs(VE, 1, putchar);
 		tputs(CL, 1, putchar);
 	}
-
-	// printf("%s%s%s\n", clstr, test1, test2);
 }
 
 void			print_usage(void)
@@ -79,6 +65,8 @@ int				main(int ac, char **av, char **en)
 	t_arg	*lst;
 	char 	cur_dir[2048] = ".";
 
+	signal(SIGINT, ft_select_exit);
+	signal(SIGWINCH, ft_select_exit);
 	if (ac < 2)
 		print_usage();
 	ft_strcat(cur_dir, "/");
@@ -91,7 +79,7 @@ int				main(int ac, char **av, char **en)
 		set_keypress(1);
 		read(STDIN_FILENO, &key, 8);
 		if (key == KEY_ESC)
-			ft_select_exit();
+			ft_select_exit(1);
 		else if (key == KEY_DOWN)
 			move_arg(&lst, "next");
 		else if (key == KEY_UP)

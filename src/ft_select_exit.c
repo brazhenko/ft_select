@@ -6,13 +6,13 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 07:48:36 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 07:37:29 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 07:56:11 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_select.h"
 
-void			ft_select_exit(void)
+void			ft_select_exit(int exit_param)
 {
 //	char buf[1024];
 //	char *termtype = getenv("TERM");
