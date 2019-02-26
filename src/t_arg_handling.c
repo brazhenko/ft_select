@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 04:40:33 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 15:38:04 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 17:38:13 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ t_arg		*delete_t_arg(t_arg *arg)
 	t_arg	*copy;
 	t_arg	*ololo;
 
-	if (!(arg))
-		exit(0);
 	ft_putstr_fd(tgetstr("cl", 0), 0);
+	if (!(arg))
+		ft_select_exit(1);
 	if (arg->is_begin == 1)
 	{
 		ololo = arg->next;
@@ -73,6 +73,8 @@ t_arg		*make_t_arg_lst(char **args, char *cur_dir)
 	t_arg	*node_cpy;
 	int		i;
 
+	if (!args || !*args)
+		return (NULL);
 	i = 0;
 	node = new_t_arg(args[i]);
 	node->row = i;

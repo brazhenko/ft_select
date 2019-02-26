@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 06:44:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 16:15:52 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 17:04:18 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,33 @@
 
 extern char g_cur_dir[];
 
-void	print_color(char *name)
+void	print_color(t_arg *arg)
 {
 	struct stat		buf;
 	char			dir[2048];
 
 	ft_strcpy(dir, g_cur_dir);
-	ft_strcpy(dir + ft_strlen(dir), name);
+	ft_strcpy(dir + ft_strlen(dir), arg->name);
 	lstat(dir, &buf);
 	if (S_ISDIR(buf.st_mode))
 	{
 		ft_putstr_fd("\x1B[34m", 0);
-		ft_putstr_fd(name, 0);
-		ft_putstr_fd("\x1B[0m", 0);
+		ft_putstr_fd(arg->name, 0);
+		arg->type = 1;
 	}
 	else if (S_ISLNK(buf.st_mode))
 	{
 		ft_putstr_fd("\x1B[35m", 0);
-		ft_putstr_fd(name, 0);
-		ft_putstr_fd("\x1B[0m", 0);
+		ft_putstr_fd(arg->name, 0);
 	}
-	else if (!access(name, 1))
+	else if (!access(arg->name, 1))
 	{
 		ft_putstr_fd("\x1B[31m", 0);
-		ft_putstr_fd(name, 0);
-		ft_putstr_fd("\x1B[0m", 0);
+		ft_putstr_fd(arg->name, 0);
 	}
 	else
-		ft_putstr_fd(name, 0);
+		ft_putstr_fd(arg->name, 0);
+	ft_putstr_fd("\x1B[0m", 0);
 }
 
 void	print_arg(t_arg *arg)
@@ -56,17 +55,17 @@ void	print_arg(t_arg *arg)
 		ft_putstr_fd(tgetstr("us", NULL), 0);
 	if (arg->is_selected)
 		ft_putstr_fd(tgetstr("so", NULL), 0);
-	print_color(arg->name);
+	print_color(arg);
 	ft_putstr_fd(tgetstr("ue", NULL), 0);
 	ft_putstr_fd(tgetstr("se", NULL), 0);
 }
 
 void	print_all_args(t_arg *arg)
 {
-	if (!arg)
-		return ;
 	set_keypress(1);
 	init_window(1);
+	if (!arg)
+		return ;
 	if (!t_arg_resize(arg))
 	{
 		write(1, "plz make window bigger\n", 24);

@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 05:37:29 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 16:25:37 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 17:43:58 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void			print_usage(void)
 	exit(EXIT_SUCCESS);
 }
 
-extern char		**environ;
-
 void			print_all_args_handler(int n)
 {
 	print_all_args(g_lst);
@@ -75,6 +73,7 @@ int				main(int ac, char **av, char **en)
 	long	key;
 
 	signal(SIGINT, ft_select_exit);
+	signal(SIGTSTP, ft_select_interrupt);
 	signal(SIGWINCH, print_all_args_handler);
 	if (ac < 2)
 		print_usage();
@@ -99,9 +98,15 @@ int				main(int ac, char **av, char **en)
 		else if (key == KEY_TAB)
 		{
 			ft_strcat(g_cur_dir, g_lst->name);
-			g_lst = make_t_arg_lst(read_directory(g_cur_dir), NULL);
-			ft_strcat(g_cur_dir, "/");
-			print_all_args(g_lst);
+			ft_putstr(g_cur_dir);
+			if (g_lst->type == 1 && access(g_cur_dir, 4) == 0)
+			{
+				g_lst = make_t_arg_lst(read_directory(g_cur_dir), NULL);
+				ft_strcat(g_cur_dir, "/");
+				print_all_args(g_lst);
+			}
+			else
+				g_cur_dir[ft_strlen(g_cur_dir) - ft_strlen(g_lst->name)] = 0;
 		}
 		else if (key == KEY_BACKSPACE)
 		{
@@ -119,7 +124,5 @@ int				main(int ac, char **av, char **en)
 			return_value(g_lst);
 			exit(0);
 		}
-		else if (key == 1111111)
-			exit(0);
 	}
 }

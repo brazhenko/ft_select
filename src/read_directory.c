@@ -6,22 +6,21 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 07:54:43 by lreznak-          #+#    #+#             */
-/*   Updated: 2019/02/26 12:08:40 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 18:27:00 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-char 		**read_directory(char *path)
+char		**read_directory(char *path)
 {
 	DIR			*fd;
 	t_dirent	*ret;
 	char		**new;
 	int			i;
-	t_arg		*arg;
 
 	i = 0;
-	new = (char**)malloc(sizeof(char*) * 1000);
+	new = (char**)malloc(sizeof(char*) * 200);
 	if (!(fd = opendir(path)))
 		exit(EXIT_FAILURE);
 	while ((ret = readdir(fd)))
@@ -32,24 +31,26 @@ char 		**read_directory(char *path)
 			i++;
 		}
 	}
+	if (!*new)
+		return (NULL);
 	return (new);
 }
 
-void	return_value(t_arg *arg)
+void		return_value(t_arg *arg)
 {
-	char	*tmp;
-
 	if (!arg)
 		return ;
 	init_window(0);
 	set_keypress(0);
 	while (arg->is_begin != 1)
 		arg = arg->next;
-	tmp = arg->name;
-	while(ft_strcmp(tmp, arg->next->name) != 0)
+	if (arg->is_selected)
+		ft_putstr_fd(arg->name, 0);
+	arg = arg->next;
+	while (arg->is_begin == 0)
 	{
 		if (arg->is_selected)
-			printf("%s ", arg->name);
+			ft_putstr_fd(arg->name, 0);
 		arg = arg->next;
 	}
 }

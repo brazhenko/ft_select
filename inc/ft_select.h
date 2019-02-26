@@ -6,7 +6,7 @@
 /*   By: ghazrak- <ghazrak-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 01:34:34 by ghazrak-          #+#    #+#             */
-/*   Updated: 2019/02/26 16:12:05 by lreznak-         ###   ########.fr       */
+/*   Updated: 2019/02/26 17:03:26 by lreznak-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@
 # define TE (tgetstr("te", NULL))
 # define TI (tgetstr("ti", NULL))
 
+typedef struct dirent		t_dirent;
+
 /*
 **			t_arg (aka struct s_arg):
 **
@@ -73,7 +75,7 @@
 **			is_selected - flag of the
 */
 
-typedef struct dirent		t_dirent;
+
 typedef struct s_arg		t_arg;
 
 struct		s_arg
@@ -104,6 +106,8 @@ void		move_arg(t_arg **arg, char *direction);
 int			t_arg_resize(t_arg *node);
 
 void		ft_select_exit(int exit_param);
+void		ft_select_interrupt(int exit_param);
+
 char		**read_directory(char *path);
 void		return_value(t_arg *arg);
 
